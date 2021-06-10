@@ -4,8 +4,8 @@ import com.example.sdd.controller.GeoController;
 import com.example.sdd.dto.CountryDto;
 import com.example.sdd.service.CountryService;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 public class GeoControllerImpl implements GeoController {
@@ -16,23 +16,23 @@ public class GeoControllerImpl implements GeoController {
         this.countryService = countryService;
     }
 
-    public List<CountryDto> getAllCountries() {
+    public Flux<CountryDto> getAllCountries() {
         return countryService.getAllCountries();
     }
 
-    public CountryDto getCountryById(Integer id) {
+    public Mono<CountryDto> getCountryById(Integer id) {
         return countryService.getCountryById(id);
     }
 
-    public CountryDto createCountry(CountryDto countryDto) {
+    public Mono<CountryDto> createCountry(CountryDto countryDto) {
         return countryService.createCountry(countryDto);
     }
 
-    public CountryDto updateCountry(Integer id, CountryDto countryDto) {
+    public Mono<CountryDto> updateCountry(Integer id, CountryDto countryDto) {
         return countryService.updateCountry(id, countryDto);
     }
 
-    public void deleteCountry(Integer id) {
-        countryService.deleteCountry(id);
+    public Mono<Void> deleteCountry(Integer id) {
+        return countryService.deleteCountry(id);
     }
 }

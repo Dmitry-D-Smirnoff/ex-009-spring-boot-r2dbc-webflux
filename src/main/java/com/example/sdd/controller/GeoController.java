@@ -11,26 +11,26 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface GeoController {
 
     @GetMapping("/countries")
-    List<CountryDto> getAllCountries();
+    Flux<CountryDto> getAllCountries();
 
     @GetMapping("/countries/{countryId}")
-    CountryDto getCountryById(@PathVariable("countryId") Integer id);
+    Mono<CountryDto> getCountryById(@PathVariable("countryId") Integer id);
 
     @PostMapping("/countries")
     @ResponseStatus(HttpStatus.CREATED)
-    CountryDto createCountry(@RequestBody CountryDto countryDto);
+    Mono<CountryDto> createCountry(@RequestBody CountryDto countryDto);
 
     @PutMapping("/countries/{countryId}")
-    CountryDto updateCountry(@PathVariable("countryId") Integer id, @RequestBody CountryDto countryDto);
+    Mono<CountryDto> updateCountry(@PathVariable("countryId") Integer id, @RequestBody CountryDto countryDto);
 
     @DeleteMapping("/countries/{countryId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteCountry(@PathVariable("countryId") Integer id);
+    Mono<Void> deleteCountry(@PathVariable("countryId") Integer id);
 }

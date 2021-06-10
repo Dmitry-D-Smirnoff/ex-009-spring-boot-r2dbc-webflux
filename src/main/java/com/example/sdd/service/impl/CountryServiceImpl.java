@@ -1,10 +1,10 @@
 package com.example.sdd.service.impl;
 
-import com.example.sdd.repository.CityRepository;
-import com.example.sdd.repository.CountryRepository;
 import com.example.sdd.dto.CountryDto;
 import com.example.sdd.entity.City;
 import com.example.sdd.entity.Country;
+import com.example.sdd.repository.CityRepository;
+import com.example.sdd.repository.CountryRepository;
 import com.example.sdd.service.CountryService;
 import org.apache.commons.collections4.IterableUtils;
 import org.modelmapper.ModelMapper;
@@ -13,6 +13,8 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +34,17 @@ public class CountryServiceImpl implements CountryService {
         this.cityRepository = cityRepository;
     }
 
-    public List<CountryDto> getAllCountries() {
+    public Flux<CountryDto> getAllCountries() {
         return IterableUtils.toList(countryRepository.findAll()).stream().map(this::convert).collect(Collectors.toList());
     }
 
-    public CountryDto getCountryById(Integer id) {
+    public Mono<CountryDto> getCountryById(Integer id) {
 
         return convert(countryRepository.findById(id)
                 .orElseThrow(() -> new DataRetrievalFailureException("Country Not Found")));
     }
 
-    public CountryDto createCountry(CountryDto countryDto) {
+    public Mono<CountryDto> createCountry(CountryDto countryDto) {
 
         Integer countryId = countryRepository.create(countryDto.getName());
         countryDto.setId(countryId);
@@ -63,7 +65,7 @@ public class CountryServiceImpl implements CountryService {
         return countryDto;
     }
 
-    public CountryDto updateCountry(Integer id, CountryDto countryDto) {
+    public Mono<CountryDto> updateCountry(Integer id, CountryDto countryDto) {
         countryRepository.findById(id)
                 .orElseThrow(() -> new DataRetrievalFailureException("Country Not Found"));
 
@@ -100,7 +102,7 @@ public class CountryServiceImpl implements CountryService {
         return countryDto;
     }
 
-    public void deleteCountry(Integer id) {
+    public Mono<Void> deleteCountry(Integer id) {
         Country country = countryRepository.findById(id)
                 .orElseThrow(() -> new DataRetrievalFailureException("Country Not Found"));
 
@@ -109,6 +111,7 @@ public class CountryServiceImpl implements CountryService {
         }
 
         countryRepository.delete(country);
+        return ???;
     }
 
     public CountryDto convert(Country country){

@@ -1,19 +1,19 @@
 package com.example.sdd.service;
 
 import com.example.sdd.dto.CountryDto;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface CountryService {
 
-    List<CountryDto> getAllCountries();
+    Flux<CountryDto> getAllCountries();
 
-    CountryDto getCountryById(Integer id);
+    Mono<CountryDto> getCountryById(Integer id);
 
-    CountryDto createCountry(CountryDto countryDto);
+    Mono<CountryDto> createCountry(CountryDto countryDto);
 
-    CountryDto updateCountry(Integer id, CountryDto countryDto);
+    Mono<CountryDto> updateCountry(Integer id, CountryDto countryDto);
 
-    void deleteCountry(Integer id);
+    Mono<Void> deleteCountry(Integer id);
 
 }
