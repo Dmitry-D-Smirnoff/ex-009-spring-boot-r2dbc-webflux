@@ -1,6 +1,7 @@
 package com.example.sdd.controller.impl;
 
 import com.example.sdd.controller.GeoController;
+import com.example.sdd.dto.CountryCreateUpdateDto;
 import com.example.sdd.dto.CountryDto;
 import com.example.sdd.service.CountryService;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,11 +25,11 @@ public class GeoControllerImpl implements GeoController {
         return countryService.getCountryById(id);
     }
 
-    public Mono<CountryDto> createCountry(CountryDto countryDto) {
+    public Mono<Mono<CountryDto>> createCountry(CountryCreateUpdateDto countryDto) {
         return countryService.createCountry(countryDto);
     }
 
-    public Mono<CountryDto> updateCountry(Integer id, CountryDto countryDto) {
+    public Mono<CountryDto> updateCountry(Integer id, CountryCreateUpdateDto countryDto) {
         return countryService.updateCountry(id, countryDto);
     }
 

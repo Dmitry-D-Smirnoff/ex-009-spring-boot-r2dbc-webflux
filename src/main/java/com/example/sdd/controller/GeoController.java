@@ -1,5 +1,6 @@
 package com.example.sdd.controller;
 
+import com.example.sdd.dto.CountryCreateUpdateDto;
 import com.example.sdd.dto.CountryDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,10 +26,10 @@ public interface GeoController {
 
     @PostMapping("/countries")
     @ResponseStatus(HttpStatus.CREATED)
-    Mono<CountryDto> createCountry(@RequestBody CountryDto countryDto);
+    Mono<Mono<CountryDto>> createCountry(@RequestBody CountryCreateUpdateDto countryDto);
 
     @PutMapping("/countries/{countryId}")
-    Mono<CountryDto> updateCountry(@PathVariable("countryId") Integer id, @RequestBody CountryDto countryDto);
+    Mono<CountryDto> updateCountry(@PathVariable("countryId") Integer id, @RequestBody CountryCreateUpdateDto countryDto);
 
     @DeleteMapping("/countries/{countryId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
