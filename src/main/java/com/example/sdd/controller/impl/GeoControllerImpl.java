@@ -3,6 +3,7 @@ package com.example.sdd.controller.impl;
 import com.example.sdd.controller.GeoController;
 import com.example.sdd.dto.CountryCreateUpdateDto;
 import com.example.sdd.dto.CountryDto;
+import com.example.sdd.entity.City;
 import com.example.sdd.service.CountryService;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
@@ -17,6 +18,10 @@ public class GeoControllerImpl implements GeoController {
         this.countryService = countryService;
     }
 
+    public Flux<City> getAllCities() {
+        return countryService.getAllCities();
+    }
+
     public Flux<CountryDto> getAllCountries() {
         return countryService.getAllCountries();
     }
@@ -25,7 +30,7 @@ public class GeoControllerImpl implements GeoController {
         return countryService.getCountryById(id);
     }
 
-    public Mono<Mono<CountryDto>> createCountry(CountryCreateUpdateDto countryDto) {
+    public Mono<Integer> createCountry(CountryCreateUpdateDto countryDto) {
         return countryService.createCountry(countryDto);
     }
 

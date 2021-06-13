@@ -2,6 +2,7 @@ package com.example.sdd.controller;
 
 import com.example.sdd.dto.CountryCreateUpdateDto;
 import com.example.sdd.dto.CountryDto;
+import com.example.sdd.entity.City;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,9 @@ import reactor.core.publisher.Mono;
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface GeoController {
 
+    @GetMapping("/cities")
+    Flux<City> getAllCities();
+
     @GetMapping("/countries")
     Flux<CountryDto> getAllCountries();
 
@@ -26,7 +30,7 @@ public interface GeoController {
 
     @PostMapping("/countries")
     @ResponseStatus(HttpStatus.CREATED)
-    Mono<Mono<CountryDto>> createCountry(@RequestBody CountryCreateUpdateDto countryDto);
+    Mono<Integer> createCountry(@RequestBody CountryCreateUpdateDto countryDto);
 
     @PutMapping("/countries/{countryId}")
     Mono<CountryDto> updateCountry(@PathVariable("countryId") Integer id, @RequestBody CountryCreateUpdateDto countryDto);
